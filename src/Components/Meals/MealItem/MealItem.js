@@ -1,7 +1,24 @@
 import React from "react";
 import MealItemForm from "./MealItemForm";
+import { useContext } from "react";
+import CartContext from "../../../store/cart-context";
 
 function MealItem(props) {
+
+    useContext(CartContext);
+
+    const cartCtx = useContext(CartContext);
+
+    const addToCartHandler = (amount) => {
+
+        cartCtx.addItem({
+            id: props.id,
+            name: props.name,
+            amount: amount,
+            price: props.price,
+        })
+
+    }
     return (
         <li>
             <div className="container w-full lg:w-4/5 mx-auto flex flex-col">
@@ -18,7 +35,7 @@ function MealItem(props) {
                     
                     {/* Meal Form */}
                     <div className="md:w-1/3 pb-4 px-6 flex items-right">
-                        <MealItemForm />
+                        <MealItemForm onAddToCart={addToCartHandler} />
                     </div>
 
                 </div>
