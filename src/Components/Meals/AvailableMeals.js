@@ -1,4 +1,6 @@
 import React from 'react';
+import Card from '../UI/Card';
+import MealItem from './MealItem/MealItem';
 
 const AvailableMeals = () => {
     const dummyMeals = [
@@ -30,16 +32,13 @@ const AvailableMeals = () => {
 
     return (
         <div>
-            <h1>Available Meals</h1>
+            <Card>
             <ul>
                 {dummyMeals.map((meal) => (
-                    <li key={meal.id}>
-                        <h2>{meal.name}</h2>
-                        <p>{meal.description}</p>
-                        <p><strong>Price:</strong> ${meal.price.toFixed(2)}</p>
-                    </li>
+                    <MealItem key={meal.id} name={meal.name} description={meal.description} price={meal.price}/>
                 ))}
             </ul>
+            </Card>
         </div>
     );
 }
