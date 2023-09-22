@@ -33,11 +33,16 @@ const AvailableMeals = () => {
     return (
         <div>
             <Card>
-            <ul>
+                <ul>
                 {dummyMeals.map((meal) => (
-                    <MealItem key={meal.id} name={meal.name} description={meal.description} price={meal.price}/>
-                ))}
-            </ul>
+                    <MealItem  
+                        id={meal.id} 
+                        key={meal.id} 
+                        name={meal.name} 
+                        description={meal.description} 
+                        price={meal.price}/>
+                    ))}
+                </ul>
             </Card>
         </div>
     );
