@@ -5,5 +5,5 @@ function CartIcon () {
         </svg>
     );
   };
-  
+   
   export default CartIcon;
