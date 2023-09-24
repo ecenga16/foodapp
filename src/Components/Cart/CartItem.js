@@ -8,7 +8,6 @@ function CartItem(props) {
             <div className="container w-full lg:w-4/5 mx-auto flex flex-col">
                 <div className="flex flex-col md:flex-row overflow-hidden bg-white rounded-lg shadow-xl mt-4 w-full mx-2">
                     
-                    {/* Item Details */}
                     <div className="flex-1 py-4 px-6 text-gray-800 flex flex-col justify-between">
                         <h3 className="font-semibold text-lg leading-tight truncate">{props.name}</h3>
                         
@@ -25,6 +24,14 @@ function CartItem(props) {
                             <p className="text-sm text-gray-900">
                                 Total: ${totalPrice.toFixed(2)}
                             </p>
+                        </div>
+                        <div className="flex justify-end mt-2">
+                            <button onClick={props.onRemove} className="bg-red-500 text-white px-2 py-1 rounded mr-2">
+                                −
+                            </button>
+                            <button onClick={props.onAdd} className="bg-green-500 text-white px-2 py-1 rounded">
+                                +
+                            </button>
                         </div>
                     </div>
 
