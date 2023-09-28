@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import Modal from "../UI/Modal";
 import CartContext from "../../store/cart-context";
 import CartItem from "./CartItem";
@@ -62,8 +62,32 @@ function Cart(props) {
 
   return (
     <Modal onhideCart={props.onhideCart}>
-      {isSubmited ? isSubmittingData : (didSubmit ? submittedSuccessfully : (
-        <>
+      {isSubmited ? (
+        <Fragment>
+          {isSubmittingData}
+          <div className="mt-4">
+            <button
+              className="bg-gray-300 text-gray-600 hover:bg-gray-400 px-4 py-2 rounded mr-2 transition-colors duration-300 ease-in-out"
+              onClick={props.onhideCart}
+            >
+              Close
+            </button>
+          </div>
+        </Fragment>
+      ) : didSubmit ? (
+        <Fragment>
+          {submittedSuccessfully}
+          <div className="mt-4">
+            <button
+              className="bg-gray-300 text-gray-600 hover:bg-gray-400 px-4 py-2 rounded mr-2 transition-colors duration-300 ease-in-out"
+              onClick={props.onhideCart}
+            >
+              Close
+            </button>
+          </div>
+        </Fragment>
+      ) : (
+        <Fragment>
           {cartItems}
           <div>
             <span>Total Amount : {totalAmount}</span>
@@ -85,8 +109,8 @@ function Cart(props) {
             )}
           </div>
           {isCheckout && <Checkout onConfirm={submitHandlerData} onCancel={() => setIsCheckout(false)} />}
-        </>
-      ))}
+        </Fragment>
+      )}
     </Modal>
   );
 }
