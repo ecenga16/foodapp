@@ -53,6 +53,7 @@ function Cart(props) {
     });
     setIsSubmited(false);
     setDidSubmit(true);
+    cartCtx.clearCart();
 
   }
 
