@@ -8,7 +8,7 @@ function Backdrop(props) {
 
 function ModalOverlay(props) {
     return (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-white rounded-lg shadow-lg p-6 w-11/12 md:max-w-md cursor-default">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-white rounded-lg shadow-lg p-6 w-9/12 md:max-w-md cursor-default overflow-y-auto max-h-screen">
             {props.children}
         </div>
     );
