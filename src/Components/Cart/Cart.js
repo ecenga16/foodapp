@@ -7,6 +7,8 @@ import Checkout from "./Checkout";
 function Cart(props) {
   const cartCtx = useContext(CartContext);
   const [isCheckout, setIsCheckout] = useState(false); 
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [didSubmit, setDidSubmit] = useState('');
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -38,29 +40,53 @@ function Cart(props) {
     </ul>
   );
 
+  const submitHandlerData = async (userData) => {
+
+    setIsSubmited(true);
+
+    await fetch('https://foodapp-f5c04-default-rtdb.europe-west1.firebasedatabase.app/order.json', {
+        method: 'Post',
+        body: JSON.stringify({
+            user:userData,
+            orderedItems: cartCtx.items,
+        })
+    });
+    setIsSubmited(false);
+    setDidSubmit(true);
+
+  }
+
+  const isSubmittingData = isSubmited && <p>Sending order data...</p>;
+
+  const submittedSuccessfully = didSubmit && <p>Successfully sent the order!</p>;
+
   return (
     <Modal onhideCart={props.onhideCart}>
-      {cartItems}
-      <div>
-        <span>Total Amount : {totalAmount}</span>
-      </div>
-      <div className="mt-4">
+      {isSubmited ? isSubmittingData : (didSubmit ? submittedSuccessfully : (
+        <>
+          {cartItems}
+          <div>
+            <span>Total Amount : {totalAmount}</span>
+          </div>
+          <div className="mt-4">
             <button
-            className="bg-gray-300 text-gray-600 hover:bg-gray-400 px-4 py-2 rounded mr-2 transition-colors duration-300 ease-in-out"
-            onClick={props.onhideCart}
+              className="bg-gray-300 text-gray-600 hover:bg-gray-400 px-4 py-2 rounded mr-2 transition-colors duration-300 ease-in-out"
+              onClick={props.onhideCart}
             >
-                Close
+              Close
             </button>
-        {hasItems && (
-            <button
+            {hasItems && (
+              <button
                 onClick={orderHandler}
                 className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded transition-colors duration-300 ease-in-out"
-            >
+              >
                 Order
-            </button>
-        )}
-      </div>
-      {isCheckout && <Checkout onCancel={() => setIsCheckout(false)} />}
+              </button>
+            )}
+          </div>
+          {isCheckout && <Checkout onConfirm={submitHandlerData} onCancel={() => setIsCheckout(false)} />}
+        </>
+      ))}
     </Modal>
   );
 }

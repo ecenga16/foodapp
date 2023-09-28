@@ -27,10 +27,10 @@ const Checkout = props => {
         const enteredPostalCode = postalCodeInputRef.current.value;
         const enteredCity = cityInputRef.current.value;
 
-        const checkName = !isEmpty(enteredName) && isNotFiveChars(enteredName);
-        const checkStreet = !isEmpty(enteredStreet) && isNotFiveChars(enteredStreet);
-        const checkPostalCode = !isEmpty(enteredPostalCode) && isNotFiveChars(enteredPostalCode);
-        const checkCity = !isEmpty(enteredCity) && isNotFiveChars(enteredCity);
+        const checkName = !isEmpty(enteredName);
+        const checkStreet = !isEmpty(enteredStreet);
+        const checkPostalCode = !isEmpty(enteredPostalCode) && isNotFiveChars(enteredStreet);
+        const checkCity = !isEmpty(enteredCity);
 
         setFormIsValid({
             name:checkName,
@@ -47,7 +47,13 @@ const Checkout = props => {
             return;
         }
 
-        console.log(enteredName, enteredCity, enteredPostalCode, enteredStreet);
+        props.onConfirm({
+            name:enteredName,
+            street:enteredStreet,
+            postalcode:enteredPostalCode,
+            city:enteredCity,
+        })
+
     }
 
     return (
