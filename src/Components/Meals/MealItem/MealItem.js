@@ -29,7 +29,7 @@ function MealItem(props) {
                         <h3 className="font-semibold text-lg leading-tight truncate">{props.name}</h3>
                         <p className="mt-2">{props.description}</p>
                         <p className="text-sm text-gray-700 uppercase tracking-wide font-semibold mt-2">
-                            ${props.price.toFixed(2)}
+                             ${props.price ? props.price.toFixed(2) : '0.00'}
                         </p>
                     </div>
                     

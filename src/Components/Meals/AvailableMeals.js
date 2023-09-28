@@ -1,40 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 
 const AvailableMeals = () => {
-    const dummyMeals = [
-        {
-            id: 'm1',
-            name: 'Spaghetti',
-            description: 'A classic Italian dish.',
-            price: 12.99,
-        },
-        {
-            id: 'm2',
-            name: 'Hamburger',
-            description: 'Juicy and delicious.',
-            price: 8.99,
-        },
-        {
-            id: 'm3',
-            name: 'Salmon Plate',
-            description: 'Freshly caught salmon with vegetables.',
-            price: 15.99,
-        },
-        {
-            id: 'm4',
-            name: 'Veggie Pizza',
-            description: 'Healthy and delicious pizza for veggie lovers.',
-            price: 9.99,
-        },
-    ];
+    const [meals, setMeals] = useState([]);
+
+    useEffect(() => {
+        const fetchMeals = async () => {
+           
+                const response = await fetch('https://foodapp-f5c04-default-rtdb.europe-west1.firebasedatabase.app/meals.json');
+
+                const responseData = await response.json();
+                const loadedMeals = [];
+
+                for (const key in responseData) {
+                    loadedMeals.push({
+                        id: key,
+                        name: responseData[key].name,
+                        description: responseData[key].description,
+                        price: responseData[key].price,
+                    });
+                }
+                setMeals(loadedMeals);
+           
+        };
+
+        fetchMeals();
+    }, []);
 
     return (
         <div>
             <Card>
                 <ul>
-                {dummyMeals.map((meal) => (
+                {meals.map((meal) => (
                     <MealItem  
                         id={meal.id} 
                         key={meal.id} 
@@ -46,6 +44,6 @@ const AvailableMeals = () => {
             </Card>
         </div>
     );
-}
+};
 
 export default AvailableMeals;
